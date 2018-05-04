@@ -1,0 +1,1 @@
+aws s3 sync ~/pictures/. s3://alexdavis-photos/2014

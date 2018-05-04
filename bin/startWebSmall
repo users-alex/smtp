@@ -1,0 +1,21 @@
+[ -f ~/.secrets ] && source ~/.secrets
+#
+docker run -d -p 5901:5901 -p 6901:6901 \
+  -e VNC_PW=$VNC_PASSWORD -e VNC_COL_DEPTH=24 -e VNC_RESOLUTION='1200x750' \
+  --user $(id -u):$(id -g) \
+  -v /home:/home \
+  -v /etc/passwd:/etc/passwd \
+  -v /etc/shadow:/etc/shadow \
+  -v /etc/group:/etc/group \
+  consol/ubuntu-xfce-vnc &
+#
+# slimmer version:
+# consol/ubuntu-icewm-vnc
+#
+# forward vnc port
+#
+echo -n "VNC connect : "
+echo "~/bin/ngrok tcp 5901"
+echo -n "WEB connect : "
+echo "~/bin/ngrok http 6901"
+echo

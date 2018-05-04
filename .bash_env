@@ -1,0 +1,35 @@
+export EDITOR=vim
+export GOARCH=amd64
+export GOOS=linux
+export GOROOT="$HOME/.local/go"
+export GOPATH="$HOME/go"
+
+export SSH_ENV=$HOME/.ssh/environment
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
+export EC2_HOME=/opt/ec2-api-tools
+
+export AWS_ACCESS_KEY=AKIAJLKHJCFGIIEGTMBA
+export AWS_SECRET_KEY=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
+export region=us-east-1
+
+export PATH="$GOROOT/bin:$GOPATH/bin:$EC2_HOME/bin:$PATH"
+   
+# start the ssh-agent
+function start_agent {
+    echo "Initializing new SSH agent..."
+    # spawn ssh-agent
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
+}
+   
+if [ -f "${SSH_ENV}" ]; then
+     . "${SSH_ENV}" > /dev/null
+     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi

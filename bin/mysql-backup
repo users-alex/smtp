@@ -1,0 +1,5 @@
+DATE=`date +"%Y%m%d"`
+
+mysqldump -u root -p15:00gmt --all-databases | gzip -c - >  $DATE-all-database.sql.gz
+
+#restore:# mysql -u root -p[root_password] [database_name] < dumpfilename.sql

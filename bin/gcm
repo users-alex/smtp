@@ -1,0 +1,5 @@
+git add -A
+echo "Please add a comment : "
+  read comment
+git commit -m "$comment"
+git push
